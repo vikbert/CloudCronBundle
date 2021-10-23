@@ -2,7 +2,6 @@
     "name": "vikbert/cloud-cron-bundle",
     "description": "A lightweight and super fast symfony bundle to schedule cron jobs in cloud environment",
     "type": "symfony-bundle",
-    "version": "0.1.0",
     "require": {
         "php": ">=7.4",
         "doctrine/annotations": "^1.13",
@@ -12,7 +11,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "ext-json": "*"
     },
-    "license": "Apache",
+    "license": "proprietary",
     "autoload": {
         "psr-4": {
             "Vikbert\\CloudCronBundle\\": "src/"
