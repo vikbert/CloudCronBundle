@@ -1,8 +1,6 @@
-# CloudCronBundle
-
 <div align="center">
   <img src="docs/cron.svg" width=100/>
-  <h3>Symfony Cron Job Bundle</h3>
+  <h3>Cloud Cron Bundle</h3>
   <p>A lightweight and super fast symfony bundle to schedule cron jobs in cloud environment, such as cloud foundry.</p>
 
   <p>
@@ -13,6 +11,8 @@
       <img src="https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat-square" alt="MIT License">
     </a>
   </p>
+
+  `composer require vikbert/cloud-cron-bundle`
 </div>
 
 ---
