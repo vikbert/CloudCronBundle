@@ -1,8 +1,7 @@
 # CloudCronBundle
 
 <div align="center">
-  <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
-  <span class="iconify" data-icon="eos-icons:cronjob" width=100></span>
+  <img src="docs/cron.svg" width=100/>
   <h3>Symfony Cron Job Bundle</h3>
   <p>A lightweight and super fast symfony bundle to schedule cron jobs in cloud environment, such as cloud foundry.</p>
 
