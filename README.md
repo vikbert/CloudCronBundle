@@ -17,20 +17,37 @@
 
 ---
 
-## Install
+> ⚠️ follow the steps to use the bundle in a symfony based application
+
+
+## 1.a Install the bundle via "packagist"
 ```bash
-npm install 
+composer require vikbert/cloud-cron-bundle
 ```
 
+## 1.b Install the bundle via "repositories" in `composer.json` locally
+> copy the bundle source to `src/bundles/CloudCronBundle`
 
-## Development
 ```bash
-npm run dev 
+# add the section to the composer.json
+ "repositories": [
+    {
+      "type": "path",
+      "url": "./bundles/CloudCronBundle"
+    }
+  ],
+
 ```
 
-## Build
+then, apply composer install
 ```bash
-npm run build 
+composer require vikbert/cloud-cron-bundle
+```
+
+## 2. Apply Doctrine migrations
+```bash
+php bin/console doctrine:migrations:diff
+php bin/console doctrine:migrations:mi
 ```
 
 ## licence
