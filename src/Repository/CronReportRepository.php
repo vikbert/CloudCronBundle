@@ -29,7 +29,7 @@ final class CronReportRepository extends ServiceEntityRepository
     }
 
     /**
-     * @throws ORMException
+     * @throws \Doctrine\ORM\ORMException
      */
     public function save(CronReport $cronReport): void
     {

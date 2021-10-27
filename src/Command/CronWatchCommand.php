@@ -15,6 +15,8 @@ use Vikbert\CloudCronBundle\Service\CronExecutor;
 
 final class CronWatchCommand extends Command
 {
+    private const ERROR_CODE_LIMIT_EXCEEDED = 999;
+    private const ERROR_CODE_EXECUTION_FAILURE = 1;
     private const TIME_LIMIT_IN_SECONDS = 600;
     private const MEMORY_LIMIT_IN_MB = 256;
     private const REPEAT_LIMIT = 60;
@@ -50,7 +52,7 @@ final class CronWatchCommand extends Command
             } catch (CronException $e) {
                 $io->error($e->getMessage());
 
-                return 0;
+                return self::ERROR_CODE_LIMIT_EXCEEDED;
             }
 
             try {
@@ -59,7 +61,7 @@ final class CronWatchCommand extends Command
                 $io->writeln($e->getMessage());
                 $io->writeln($e->getTraceAsString());
 
-                return 1;
+                return self::ERROR_CODE_EXECUTION_FAILURE;
             }
 
             $io->comment(sprintf('[%s] Command Watcher will retry after 5 seconds ...', (new DateTime())->format('H:i:s')));

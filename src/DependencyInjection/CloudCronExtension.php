@@ -3,6 +3,7 @@
 declare(strict_types = 1);
 
 namespace Vikbert\CloudCronBundle\DependencyInjection;
+
 use Exception;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
