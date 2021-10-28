@@ -19,18 +19,18 @@ final class DueTimeTolerance
         }
     }
 
-    private function resetDateTimeSecondsToZero(DateTime $targetTime): DateTimeImmutable
-    {
-        $targetTime->setTime((int) $targetTime->format('H'), (int) $targetTime->format('i'), 0);
-
-        return DateTimeImmutable::createFromMutable($targetTime);
-    }
-
     /**
      * @return DateTimeImmutable[]
      */
     public function getDueTimeCandidates(): array
     {
         return $this->dueTimeCandidates;
+    }
+
+    private function resetDateTimeSecondsToZero(DateTime $targetTime): DateTimeImmutable
+    {
+        $targetTime->setTime((int) $targetTime->format('H'), (int) $targetTime->format('i'), 0);
+
+        return DateTimeImmutable::createFromMutable($targetTime);
     }
 }
