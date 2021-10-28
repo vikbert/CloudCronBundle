@@ -10,10 +10,6 @@
                  public="false">
             <argument type="service" id="Doctrine\Persistence\ManagerRegistry"/>
         </service>
-        <service id="ramsey.uuid.doctrine.uuid_generator"
-                 class="Ramsey\Uuid\Doctrine\UuidGenerator"
-                 public="false">
-        </service>
         <service id="vikbert_cloud_cron.repository.cron_report_repository"
                  class="Vikbert\CloudCronBundle\Repository\CronReportRepository"
                  public="false">
