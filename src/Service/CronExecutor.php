@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace Vikbert\CloudCronBundle\Service;
 
 use DateTimeImmutable;
-use RuntimeException;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -16,6 +15,7 @@ use Symfony\Component\Process\Process;
 use Throwable;
 use Vikbert\CloudCronBundle\Entity\CronJob;
 use Vikbert\CloudCronBundle\Entity\CronReport;
+use Vikbert\CloudCronBundle\Exception\CronBundleException;
 use Vikbert\CloudCronBundle\Repository\CronJobRepository;
 use Vikbert\CloudCronBundle\Repository\CronReportRepository;
 
@@ -104,7 +104,7 @@ final class CronExecutor
                 $errorOutput = $process->getErrorOutput();
                 $output->write($errorOutput);
 
-                throw new RuntimeException('[Process error] ' . $errorOutput);
+                throw CronBundleException::onFailedSymfonyProcess($errorOutput);
             }
 
             $cronReport->finish($exitCode, $process->getOutput());

@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace Vikbert\CloudCronBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use RuntimeException;
+use Vikbert\CloudCronBundle\Exception\CronBundleException;
 
 /**
  * @ORM\Table(name="cron_job")
@@ -97,7 +97,7 @@ class CronJob
         $cleanCommand = str_replace($forbiddenChars, '', $this->command);
 
         if ($cleanCommand !== $this->command) {
-            throw new RuntimeException(sprintf('Forbidden characters %s found in job command: %s.', json_encode($forbiddenChars), $this->command));
+            throw CronBundleException::onInvalidCronCommand($this->command);
         }
     }
 }

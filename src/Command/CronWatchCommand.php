@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Throwable;
-use Vikbert\CloudCronBundle\Exception\CronException;
+use Vikbert\CloudCronBundle\Exception\CronBundleException;
 use Vikbert\CloudCronBundle\Service\CronExecutor;
 
 final class CronWatchCommand extends Command
@@ -49,7 +49,7 @@ final class CronWatchCommand extends Command
                 $this->assertMemoryLimit();
                 $this->assertTimeLimit();
                 $this->assertWatcherRepeatLimit();
-            } catch (CronException $e) {
+            } catch (CronBundleException $e) {
                 $io->error($e->getMessage());
 
                 return self::ERROR_CODE_LIMIT_EXCEEDED;
@@ -73,21 +73,21 @@ final class CronWatchCommand extends Command
     private function assertMemoryLimit(): void
     {
         if ((memory_get_usage(true) / 1024 / 1024) > self::MEMORY_LIMIT_IN_MB) {
-            throw CronException::onMemoryLimitReached();
+            throw CronBundleException::onMemoryLimitReached();
         }
     }
 
     private function assertTimeLimit(): void
     {
         if ((time() - $this->startTime) > self::TIME_LIMIT_IN_SECONDS) {
-            throw CronException::onTimeLimitReached();
+            throw CronBundleException::onTimeLimitReached();
         }
     }
 
     private function assertWatcherRepeatLimit(): void
     {
         if ($this->repeatCounter > self::REPEAT_LIMIT) {
-            throw CronException::onWatcherRepeatLimitReached();
+            throw CronBundleException::onWatcherRepeatLimitReached();
         }
     }
 }
