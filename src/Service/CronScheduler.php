@@ -52,8 +52,8 @@ final class CronScheduler
 
     private function isAlreadyStarted(CronJob $job): bool
     {
-        $foundReport = $this->cronReportRepository->countByJobAndDueTime($job, $this->dueTime);
+        $foundStartedCronReportForDueTime = $this->cronReportRepository->countByJobAndDueTime($job, $this->dueTime);
 
-        return $foundReport > 0;
+        return $foundStartedCronReportForDueTime > 0;
     }
 }
