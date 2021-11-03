@@ -19,7 +19,7 @@
 
 > ⚠️ follow the steps to use the bundle in a symfony based application
 
-## Symfony Demo Project
+# 🌟 Symfony Demo Project
 this demo project will show you how to use the bundle within a classical symfony applicaiton: <https://bitbucket.schwarz/users/zhoux/repos/cloud-cron-bundle-demo/browse>
 
 
