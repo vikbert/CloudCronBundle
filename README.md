@@ -23,6 +23,7 @@
 this demo project will show you how to use the bundle within a classical symfony applicaiton: <https://bitbucket.schwarz/users/zhoux/repos/cloud-cron-bundle-demo/browse>
 
 
+# How to integrate the bundle
 ## 1.a Install the bundle via "packagist"
 ```bash
 composer require vikbert/cloud-cron-bundle
