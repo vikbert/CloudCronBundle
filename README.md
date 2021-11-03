@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="docs/cron.svg" width=400/>
+  <img src="docs/cron.svg" width=400 alt="CCB"/>
   <h3>Cloud Cron Bundle</h3>
   <p>A lightweight and super fast symfony bundle to schedule cron jobs in cloud environment, such as cloud foundry.</p>
 
