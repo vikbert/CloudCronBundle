@@ -9,6 +9,9 @@ use DateTimeImmutable;
 
 final class DueTimeTolerance
 {
+    /**
+     * @var DateTimeImmutable[]
+     */
     private array $dueTimeCandidates;
 
     public function __construct(DateTime $targetTime, int $dueTimeToleranceMinutes)

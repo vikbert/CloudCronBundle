@@ -11,12 +11,13 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="cron_report")
  * @ORM\Entity
  */
-class CronReport
+final class CronReport
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @phpstan-ignore-next-line
      */
     private int $id;
 
@@ -27,16 +28,19 @@ class CronReport
 
     /**
      * @ORM\Column(type="boolean", options={"default" : 0})
+     * @phpstan-ignore-next-line
      */
     private bool $finished;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @phpstan-ignore-next-line
      */
     private ?float $runDuration;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @phpstan-ignore-next-line
      */
     private ?int $exitCode;
 
@@ -47,8 +51,9 @@ class CronReport
 
     /**
      * @ORM\Column(type="integer")
+     * @phpstan-ignore-next-line
      */
-    protected int $jobId;
+    private int $jobId;
 
     private string $command;
 
@@ -61,6 +66,9 @@ class CronReport
         $this->command = $job->getCommand();
         $this->startedAt = new DateTimeImmutable();
         $this->finished = false;
+        $this->runDuration = 0;
+        $this->exitCode = 0;
+        $this->output = '';
     }
 
     public static function start(CronJob $job, DateTimeImmutable $dueTime): self
@@ -102,9 +110,9 @@ class CronReport
         $this->runDuration = $this->calculateRunDurationInSeconds();
     }
 
-    public function getOutput(): ?string
+    public function getOutput(): string
     {
-        return $this->output;
+        return (string) $this->output;
     }
 
     private function calculateRunDurationInSeconds(): int

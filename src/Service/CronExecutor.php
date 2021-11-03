@@ -5,10 +5,6 @@ declare(strict_types = 1);
 namespace Vikbert\CloudCronBundle\Service;
 
 use DateTimeImmutable;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\BufferedOutput;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\StyleInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Process\Process;
@@ -24,7 +20,6 @@ final class CronExecutor
     private KernelInterface $kernel;
     private CronJobRepository $cronJobRepository;
     private CronReportRepository $cronReportRepository;
-    private ?array $cachedJobs = null;
     private CronScheduler $cronScheduler;
 
     public function __construct(
@@ -39,33 +34,11 @@ final class CronExecutor
         $this->cronScheduler = $cronScheduler;
     }
 
-    /**
-     * @return CronJob[]
-     */
-    private function getEnabledCronJobs(StyleInterface $io): array
+    public function executeJobs(SymfonyStyle $io): void
     {
-        if ($this->cachedJobs === null) {
-            $this->cachedJobs = $this->cronJobRepository->findEnabled();
-            $io->success(sprintf('Found %d enabled job(s).', count($this->cachedJobs)));
-        }
-
-        return $this->cachedJobs;
-    }
-
-    public function runScheduledJobs(?OutputInterface $output = null): OutputInterface
-    {
-        $output = $output ?? new BufferedOutput();
-
-        $io = new SymfonyStyle(new ArrayInput([]), $output);
-
-        $jobs = $this->getEnabledCronJobs($io);
-        if (0 === count($jobs)) {
-            $io->warning('No enabled jobs found');
-
-            return $output;
-        }
-
         $jobsExecuted = 0;
+        $jobs = $this->cronJobRepository->findEnabled();
+
         foreach ($jobs as $job) {
             $cronReport = $this->cronScheduler->schedule($job);
             $io->comment(sprintf('Try to schedule Job: %s', (string) $job));
@@ -75,22 +48,17 @@ final class CronExecutor
             }
 
             $io->writeln(sprintf('Starting Job "%d": (%s)', $job->getId(), (string) $job));
-
-            $this->execute($job, $cronReport->getDueTime(), $output);
-
+            $this->execute($job, $cronReport->getDueTime());
             ++$jobsExecuted;
-
             $io->writeln(sprintf('Finished Job "%d": (%s)', $job->getId(), (string) $job));
         }
 
         if (0 === $jobsExecuted) {
             $io->warning('No scheduled jobs found for current time');
         }
-
-        return $output;
     }
 
-    private function execute(CronJob $job, DateTimeImmutable $dueTime, OutputInterface $output): void
+    private function execute(CronJob $job, DateTimeImmutable $dueTime): void
     {
         $cronReport = CronReport::start($job, $dueTime);
         $this->cronReportRepository->save($cronReport);
@@ -101,10 +69,7 @@ final class CronExecutor
             $exitCode = $process->wait();
 
             if (!$process->isSuccessful()) {
-                $errorOutput = $process->getErrorOutput();
-                $output->write($errorOutput);
-
-                throw CronBundleException::onFailedSymfonyProcess($errorOutput);
+                throw CronBundleException::onFailedSymfonyProcess($process->getErrorOutput());
             }
 
             $cronReport->finish($exitCode, $process->getOutput());

@@ -6,7 +6,6 @@ namespace Vikbert\CloudCronBundle\Repository;
 
 use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Exception\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 use Vikbert\CloudCronBundle\Entity\CronJob;
 use Vikbert\CloudCronBundle\Entity\CronReport;
@@ -18,14 +17,16 @@ final class CronReportRepository extends ServiceEntityRepository
         parent::__construct($registry, CronReport::class);
     }
 
-    public function countByJobAndDueTime(CronJob $cronJob, DateTimeImmutable $dueTime): int
+    public function foundJobForDueTime(CronJob $cronJob, DateTimeImmutable $dueTime): bool
     {
-        return $this->count(
+        $counter = $this->count(
             [
                 'dueTime' => $dueTime,
                 'jobId' => $cronJob->getId(),
             ]
         );
+
+        return $counter > 0;
     }
 
     /**

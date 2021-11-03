@@ -11,12 +11,13 @@ use Vikbert\CloudCronBundle\Exception\CronBundleException;
  * @ORM\Table(name="cron_job")
  * @ORM\Entity
  */
-class CronJob
+final class CronJob
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @phpstan-ignore-next-line
      */
     private int $id;
 

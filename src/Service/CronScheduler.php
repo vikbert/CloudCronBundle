@@ -22,13 +22,14 @@ final class CronScheduler
     public function __construct(CronReportRepository $cronReportRepository)
     {
         $this->cronReportRepository = $cronReportRepository;
+        $this->dueTime = null;
     }
 
     public function schedule(CronJob $job): ?CronReport
     {
         $this->detectDueTimeBackwards($job);
 
-        if ($this->dueTime && !$this->isAlreadyStarted($job)) {
+        if ($this->dueTime && !$this->isAlreadyStarted($job, $this->dueTime)) {
             return CronReport::start($job, $this->dueTime);
         }
 
@@ -37,23 +38,24 @@ final class CronScheduler
 
     private function detectDueTimeBackwards(CronJob $job): void
     {
-        $this->dueTime = null;
-        $dueTimeTolerance = new DueTimeTolerance(new DateTime(), self::TOLERANCE_MINUTES);
-
-        foreach ($dueTimeTolerance->getDueTimeCandidates() as $candidate) {
-            $isDueTimeCandidate = Expression::isDue($job->getSchedule(), $candidate->getTimestamp());
-            if ($isDueTimeCandidate) {
+        foreach ($this->getDueTimeCandidatesBackwards() as $candidate) {
+            if (Expression::isDue($job->getSchedule(), $candidate->getTimestamp())) {
                 $this->dueTime = $candidate;
 
-                return;
+                break;
             }
         }
     }
 
-    private function isAlreadyStarted(CronJob $job): bool
+    private function getDueTimeCandidatesBackwards(): array
     {
-        $foundStartedCronReportForDueTime = $this->cronReportRepository->countByJobAndDueTime($job, $this->dueTime);
+        $dueTimeTolerance = new DueTimeTolerance(new DateTime(), self::TOLERANCE_MINUTES);
 
-        return $foundStartedCronReportForDueTime > 0;
+        return $dueTimeTolerance->getDueTimeCandidates();
+    }
+
+    private function isAlreadyStarted(CronJob $job, DateTimeImmutable $dueTime): bool
+    {
+        return $this->cronReportRepository->foundJobForDueTime($job, $dueTime);
     }
 }
