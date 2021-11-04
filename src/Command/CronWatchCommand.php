@@ -43,8 +43,8 @@ final class CronWatchCommand extends Command
 
         while (true) {
             $processContext = $processGuard->validate();
-            if ($processContext->haserror()) {
-                $io->error($processContext->geterror());
+            if ($processContext->hasError()) {
+                $io->error($processContext->getError());
 
                 return self::ERROR_CODE_LIMIT_EXCEEDED;
             }
