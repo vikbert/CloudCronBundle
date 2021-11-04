@@ -19,8 +19,10 @@ final class CronWatchCommand extends Command
 {
     private const ERROR_CODE_LIMIT_EXCEEDED = 999;
     private const ERROR_CODE_EXECUTION_FAILURE = 1;
-    protected static $defaultName = 'cron:watch';
+
     private CronExecutor $cronExecutor;
+
+    protected static $defaultName = 'cron:watch';
 
     public function __construct(CronExecutor $cronExecutor)
     {
