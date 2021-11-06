@@ -62,8 +62,11 @@ php bin/console doctrine:migrations:mi
 ## config/packages/cloud_cron.yaml
 cloud_cron:
     cron_watcher:
+        # 60 repeats
         max_loop_limit: 60
+        # 256 MB
         max_memory_limit: 256
+        # 600 seconds
         max_time_limit: 600
 ```
 
