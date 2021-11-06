@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="docs/cron.svg" width=400 alt="Project-Logo"/>
+  <img src="docs/cron.svg" width=100 alt="Project-Logo"/>
   <h3>Cloud Cron Bundle</h3>
   <p>A lightweight and super fast symfony bundle to schedule cron jobs in cloud environment, such as cloud foundry.</p>
 
@@ -17,14 +17,13 @@
 
 ---
 
-# Symfony Demo Project
-this example project will show you how to use the bundle within a classical symfony application
-> in this demo, option 1.b is used to install the bundle via relative path
+# How to start the demo
+in this demo, option 1.b is used to install the bundle via relative path
 ```bash
 cd example
+
 make start
 ```
-
 
 # How to integrate the bundle
 ## 1.a Install the bundle via "packagist"
