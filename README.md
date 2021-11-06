@@ -1,5 +1,6 @@
 <div align="center">
   <img src="docs/cron.svg" width=100 alt="Project-Logo"/>
+  <img src="docs/cron.png" width=100 alt="Project-Logo"/>
   <h3>Cloud Cron Bundle</h3>
   <p>A lightweight and super fast symfony bundle to schedule cron jobs in cloud environment, and it is designed to 
 be used STACKIT.</p>
