@@ -17,10 +17,13 @@
 
 ---
 
-> ⚠️ follow the steps to use the bundle in a symfony based application
-
 # Symfony Demo Project
-this demo project will show you how to use the bundle within a classical symfony applicaiton: <https://bitbucket.schwarz/users/zhoux/repos/cloud-cron-bundle-demo/browse>
+this example project will show you how to use the bundle within a classical symfony application
+> in this demo, option 1.b is used to install the bundle via relative path
+```bash
+cd example
+make start
+```
 
 
 # How to integrate the bundle
