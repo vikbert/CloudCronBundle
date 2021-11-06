@@ -65,11 +65,13 @@ final class CronWatchCommand extends Command
 
     private function initProcessGuard(): ProcessGuard
     {
+        $bundleConfig = $this->container->has('cron_watch.config') ?? [];
+
         $processGuard = new ProcessGuard();
         $processGuard->addRules([
-            new MaxMemoryLimit($this->container->getParameter('cron_watcher.max_memory_limit')),
-            new MaxLoopLimit($this->container->getParameter('cron_watcher.max_loop_limit')),
-            new MaxTimeLimit($this->container->getParameter('cron_watcher.max_time_limit')),
+            new MaxMemoryLimit($bundleConfig['max_memory_limit'] ?? null),
+            new MaxLoopLimit($bundleConfig['max_loop_limit'] ?? null),
+            new MaxTimeLimit($bundleConfig['max_time_limit'] ?? null),
         ]);
 
         return $processGuard;
