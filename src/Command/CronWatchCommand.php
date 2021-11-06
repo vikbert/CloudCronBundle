@@ -18,6 +18,7 @@ use Chapterphp\CloudCronBundle\Service\Guard\ProcessGuard;
 
 final class CronWatchCommand extends Command
 {
+    private const SLEEP_TIME_SECONDS = 60;
     private const ERROR_CODE_LIMIT_EXCEEDED = 999;
     private const ERROR_CODE_EXECUTION_FAILURE = 1;
 
@@ -54,7 +55,7 @@ final class CronWatchCommand extends Command
 
             try {
                 $this->cronExecutor->executeJobs($io);
-                sleep(60);
+                sleep(self::SLEEP_TIME_SECONDS);
             } catch (Throwable $e) {
                 $io->writeln($e->getTraceAsString());
 
