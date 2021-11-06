@@ -51,7 +51,7 @@ final class CronWatchCommand extends Command
 
             try {
                 $this->cronExecutor->executeJobs($io);
-                sleep(5);
+                sleep(60);
             } catch (Throwable $e) {
                 $io->writeln($e->getTraceAsString());
 

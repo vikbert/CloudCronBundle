@@ -20,7 +20,7 @@ db-reset: ## reset the db
 	make db-fixtures
 
 db-fixtures: ## load data fixtures
-	php bin/console doctrine:fi:load
+	php bin/console doctrine:fi:load -n
 
 db-migrate: ## doctrine migrate
 	php bin/console doctrine:migrations:migrate -n
