@@ -57,6 +57,16 @@ php bin/console doctrine:migrations:diff
 php bin/console doctrine:migrations:mi
 ```
 
+## 3. config the bundle
+```bash
+## config/packages/cloud_cron.yaml
+cloud_cron:
+    cron_watcher:
+        max_loop_limit: 60
+        max_memory_limit: 256
+        max_time_limit: 600
+```
+
 # How to config STACKIT
 ```bash
 ## manifest.prod.yaml for STACKIT
