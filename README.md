@@ -1,7 +1,8 @@
 <div align="center">
   <img src="docs/cron.svg" width=100 alt="Project-Logo"/>
   <h3>Cloud Cron Bundle</h3>
-  <p>A lightweight and super fast symfony bundle to schedule cron jobs in cloud environment, such as cloud foundry.</p>
+  <p>A lightweight and super fast symfony bundle to schedule cron jobs in cloud environment, and it is designed to 
+be used STACKIT.</p>
 
   <p>
     <a href="#">
@@ -54,6 +55,19 @@ composer require vikbert/cloud-cron-bundle
 ```bash
 php bin/console doctrine:migrations:diff
 php bin/console doctrine:migrations:mi
+```
+
+# How to config STACKIT
+```bash
+## manifest.prod.yaml for STACKIT
+    processes:
+      - type: cron
+        command: php bin/console cron:watch -vvv
+        disk_quota: 1G
+        health-check-type: process
+        instances: 2
+        memory: 256M
+        timeout: 10
 ```
 
 ## licence
