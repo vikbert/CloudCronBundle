@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Vikbert\CloudCronBundle\Entity;
+namespace Chapterphp\CloudCronBundle\Entity;
 
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;

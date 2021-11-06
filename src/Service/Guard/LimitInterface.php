@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Vikbert\CloudCronBundle\Service\Guard;
+namespace Chapterphp\CloudCronBundle\Service\Guard;
 
 interface LimitInterface
 {

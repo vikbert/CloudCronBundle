@@ -2,11 +2,11 @@
 
 declare(strict_types = 1);
 
-namespace Vikbert\CloudCronBundle\Repository;
+namespace Chapterphp\CloudCronBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Vikbert\CloudCronBundle\Entity\CronJob;
+use Chapterphp\CloudCronBundle\Entity\CronJob;
 
 /**
  * @method CronJob[] findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)

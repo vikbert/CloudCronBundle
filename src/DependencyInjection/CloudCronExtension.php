@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Vikbert\CloudCronBundle\DependencyInjection;
+namespace Chapterphp\CloudCronBundle\DependencyInjection;
 
 use Exception;
 use Symfony\Component\Config\FileLocator;

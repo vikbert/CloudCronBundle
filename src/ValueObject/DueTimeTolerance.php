@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Vikbert\CloudCronBundle\ValueObject;
+namespace Chapterphp\CloudCronBundle\ValueObject;
 
 use DateTime;
 use DateTimeImmutable;

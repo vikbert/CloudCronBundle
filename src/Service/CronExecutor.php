@@ -2,18 +2,18 @@
 
 declare(strict_types = 1);
 
-namespace Vikbert\CloudCronBundle\Service;
+namespace Chapterphp\CloudCronBundle\Service;
 
 use DateTimeImmutable;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Process\Process;
 use Throwable;
-use Vikbert\CloudCronBundle\Entity\CronJob;
-use Vikbert\CloudCronBundle\Entity\CronReport;
-use Vikbert\CloudCronBundle\Exception\CronBundleException;
-use Vikbert\CloudCronBundle\Repository\CronJobRepository;
-use Vikbert\CloudCronBundle\Repository\CronReportRepository;
+use Chapterphp\CloudCronBundle\Entity\CronJob;
+use Chapterphp\CloudCronBundle\Entity\CronReport;
+use Chapterphp\CloudCronBundle\Exception\CronBundleException;
+use Chapterphp\CloudCronBundle\Repository\CronJobRepository;
+use Chapterphp\CloudCronBundle\Repository\CronReportRepository;
 
 final class CronExecutor
 {

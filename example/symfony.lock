@@ -270,7 +270,7 @@
     "symfony/yaml": {
         "version": "5.3.x-dev"
     },
-    "vikbert/cloud-cron-bundle": {
+    "chapterphp/cloud-cron-bundle": {
         "version": "dev-main"
     }
 }

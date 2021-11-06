@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Vikbert\CloudCronBundle;
+namespace Chapterphp\CloudCronBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

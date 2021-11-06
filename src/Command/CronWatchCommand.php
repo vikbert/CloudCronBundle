@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Vikbert\CloudCronBundle\Command;
+namespace Chapterphp\CloudCronBundle\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -10,11 +10,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Throwable;
-use Vikbert\CloudCronBundle\Service\CronExecutor;
-use Vikbert\CloudCronBundle\Service\Guard\MaxLoopLimit;
-use Vikbert\CloudCronBundle\Service\Guard\MaxMemoryLimit;
-use Vikbert\CloudCronBundle\Service\Guard\MaxTimeLimit;
-use Vikbert\CloudCronBundle\Service\Guard\ProcessGuard;
+use Chapterphp\CloudCronBundle\Service\CronExecutor;
+use Chapterphp\CloudCronBundle\Service\Guard\MaxLoopLimit;
+use Chapterphp\CloudCronBundle\Service\Guard\MaxMemoryLimit;
+use Chapterphp\CloudCronBundle\Service\Guard\MaxTimeLimit;
+use Chapterphp\CloudCronBundle\Service\Guard\ProcessGuard;
 
 final class CronWatchCommand extends Command
 {

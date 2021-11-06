@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Vikbert\CloudCronBundle\Exception;
+namespace Chapterphp\CloudCronBundle\Exception;
 
 use Exception;
 

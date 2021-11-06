@@ -2,13 +2,13 @@
 
 declare(strict_types = 1);
 
-namespace Vikbert\CloudCronBundle\Repository;
+namespace Chapterphp\CloudCronBundle\Repository;
 
 use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Vikbert\CloudCronBundle\Entity\CronJob;
-use Vikbert\CloudCronBundle\Entity\CronReport;
+use Chapterphp\CloudCronBundle\Entity\CronJob;
+use Chapterphp\CloudCronBundle\Entity\CronReport;
 
 final class CronReportRepository extends ServiceEntityRepository
 {

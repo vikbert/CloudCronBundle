@@ -5,34 +5,34 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="vikbert_cloud_cron.repository.cron_job_repository"
-                 class="Vikbert\CloudCronBundle\Repository\CronJobRepository"
+        <service id="chapterphp_cloud_cron.repository.cron_job_repository"
+                 class="Chapterphp\CloudCronBundle\Repository\CronJobRepository"
                  public="false">
             <argument type="service" id="Doctrine\Persistence\ManagerRegistry"/>
         </service>
-        <service id="vikbert_cloud_cron.repository.cron_report_repository"
-                 class="Vikbert\CloudCronBundle\Repository\CronReportRepository"
+        <service id="chapterphp_cloud_cron.repository.cron_report_repository"
+                 class="Chapterphp\CloudCronBundle\Repository\CronReportRepository"
                  public="false">
             <argument type="service" id="Doctrine\Persistence\ManagerRegistry"/>
         </service>
-        <service id="vikbert_cloud_cron.service.cron_scheduler"
-                 class="Vikbert\CloudCronBundle\Service\CronScheduler"
+        <service id="chapterphp_cloud_cron.service.cron_scheduler"
+                 class="Chapterphp\CloudCronBundle\Service\CronScheduler"
                  public="false">
-            <argument type="service" id="vikbert_cloud_cron.repository.cron_report_repository"/>
+            <argument type="service" id="chapterphp_cloud_cron.repository.cron_report_repository"/>
         </service>
-        <service id="vikbert_cloud_cron.service.cron_executor"
-                 class="Vikbert\CloudCronBundle\Service\CronExecutor"
+        <service id="chapterphp_cloud_cron.service.cron_executor"
+                 class="Chapterphp\CloudCronBundle\Service\CronExecutor"
                  public="false">
             <argument type="service" id="Symfony\Component\HttpKernel\KernelInterface"/>
-            <argument type="service" id="vikbert_cloud_cron.service.cron_scheduler"/>
-            <argument type="service" id="vikbert_cloud_cron.repository.cron_job_repository"/>
-            <argument type="service" id="vikbert_cloud_cron.repository.cron_report_repository"/>
+            <argument type="service" id="chapterphp_cloud_cron.service.cron_scheduler"/>
+            <argument type="service" id="chapterphp_cloud_cron.repository.cron_job_repository"/>
+            <argument type="service" id="chapterphp_cloud_cron.repository.cron_report_repository"/>
         </service>
-        <service id="vikbert_cloud_cron.command.cron_watch_command"
-                 class="Vikbert\CloudCronBundle\Command\CronWatchCommand"
+        <service id="chapterphp_cloud_cron.command.cron_watch_command"
+                 class="Chapterphp\CloudCronBundle\Command\CronWatchCommand"
                  public="true">
             <tag name="console.command"/>
-            <argument type="service" id="vikbert_cloud_cron.service.cron_executor"/>
+            <argument type="service" id="chapterphp_cloud_cron.service.cron_executor"/>
             <argument type="service" id="service_container"/>
         </service>
     </services>

@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Vikbert\CloudCronBundle\Service\Guard;
+namespace Chapterphp\CloudCronBundle\Service\Guard;
 
 final class MaxMemoryLimit implements LimitInterface
 {
@@ -12,7 +12,6 @@ final class MaxMemoryLimit implements LimitInterface
     public function __construct(?int $memoryLimitInMB = null)
     {
         $this->memoryLimitInMB = $memoryLimitInMB ?? self::MEMORY_LIMIT_IN_MB;
-        var_dump($this->memoryLimitInMB);
     }
 
     public function execute(ProcessContext $processContext): ProcessContext

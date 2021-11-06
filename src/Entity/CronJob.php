@@ -2,10 +2,10 @@
 
 declare(strict_types = 1);
 
-namespace Vikbert\CloudCronBundle\Entity;
+namespace Chapterphp\CloudCronBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Vikbert\CloudCronBundle\Exception\CronBundleException;
+use Chapterphp\CloudCronBundle\Exception\CronBundleException;
 
 /**
  * @ORM\Table(name="cron_job")

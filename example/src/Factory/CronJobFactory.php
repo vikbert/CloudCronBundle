@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Factory;
 
-use Vikbert\CloudCronBundle\Entity\CronJob;
+use Chapterphp\CloudCronBundle\Entity\CronJob;
 
 final class CronJobFactory
 {

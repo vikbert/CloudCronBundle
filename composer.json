@@ -1,5 +1,5 @@
 {
-    "name": "vikbert/cloud-cron-bundle",
+    "name": "chapterphp/cloud-cron-bundle",
     "description": "A lightweight and super fast symfony bundle to schedule cron jobs in cloud environment",
     "type": "library",
     "require": {
@@ -14,13 +14,13 @@
     "license": "proprietary",
     "autoload": {
         "psr-4": {
-            "Vikbert\\CloudCronBundle\\": "src/"
+            "Chapterphp\\CloudCronBundle\\": "src/"
         }
     },
     "authors": [
         {
-            "name": "vikbert",
-            "email": "segentor@gmail.com"
+            "name": "Xun Zhou",
+            "email": "xun.zhou@mail.schwarz"
         }
     ]
 }

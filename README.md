@@ -13,7 +13,7 @@ be used STACKIT.</p>
     </a>
   </p>
 
-  `composer require vikbert/cloud-cron-bundle`
+  `composer require chapterphp/cloud-cron-bundle`
 </div>
 
 ---
@@ -29,7 +29,7 @@ make start
 # How to integrate the bundle
 ## 1.a Install the bundle via "packagist"
 ```bash
-composer require vikbert/cloud-cron-bundle
+composer require chapterphp/cloud-cron-bundle
 ```
 
 ## 1.b Install the bundle via "repositories" in `composer.json` locally
@@ -48,7 +48,7 @@ composer require vikbert/cloud-cron-bundle
 
 then, apply composer install
 ```bash
-composer require vikbert/cloud-cron-bundle
+composer require chapterphp/cloud-cron-bundle
 ```
 
 ## 2. Apply Doctrine migrations
@@ -72,4 +72,7 @@ php bin/console doctrine:migrations:mi
 
 ## licence
 
-[MIT](./LICENSE) License © 2021 [@vikbert](https://vikbert.github.io/)
+[apache-2.0](https://choosealicense.com/licenses/apache-2.0/)
+
+## Author
+xun.zhou@mail.schwarz
