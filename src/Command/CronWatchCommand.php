@@ -8,6 +8,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Throwable;
 use Vikbert\CloudCronBundle\Service\CronExecutor;
 use Vikbert\CloudCronBundle\Service\Guard\MaxLoopLimit;
@@ -21,14 +22,16 @@ final class CronWatchCommand extends Command
     private const ERROR_CODE_EXECUTION_FAILURE = 1;
 
     private CronExecutor $cronExecutor;
+    private ContainerInterface $container;
 
     protected static $defaultName = 'cron:watch';
 
-    public function __construct(CronExecutor $cronExecutor)
+    public function __construct(CronExecutor $cronExecutor, ContainerInterface $container)
     {
         parent::__construct();
 
         $this->cronExecutor = $cronExecutor;
+        $this->container = $container;
     }
 
     protected function configure(): void
@@ -64,9 +67,9 @@ final class CronWatchCommand extends Command
     {
         $processGuard = new ProcessGuard();
         $processGuard->addRules([
-            new MaxMemoryLimit(),
-            new MaxLoopLimit(),
-            new MaxTimeLimit(),
+            new MaxMemoryLimit($this->container->getParameter('cron_watcher.max_memory_limit')),
+            new MaxLoopLimit($this->container->getParameter('cron_watcher.max_loop_limit')),
+            new MaxTimeLimit($this->container->getParameter('cron_watcher.max_time_limit')),
         ]);
 
         return $processGuard;

@@ -33,6 +33,7 @@
                  public="true">
             <tag name="console.command"/>
             <argument type="service" id="vikbert_cloud_cron.service.cron_executor"/>
+            <argument type="service" id="service_container"/>
         </service>
     </services>
 </container>
