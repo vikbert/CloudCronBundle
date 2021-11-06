@@ -1,0 +1,5 @@
+cloud_cron:
+    cron_watcher:
+        max_loop_limit: 123
+        max_memory_limit: 123
+        max_time_limit: 123
