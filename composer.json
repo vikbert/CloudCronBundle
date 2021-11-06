@@ -2,6 +2,7 @@
     "name": "chapterphp/cloud-cron-bundle",
     "description": "A lightweight and super fast symfony bundle to schedule cron jobs in cloud environment",
     "type": "library",
+    "keywords": ["stackit", "cron", "cron job", "process", "bundle"],
     "require": {
         "php": ">=7.4",
         "doctrine/annotations": "^1.13",

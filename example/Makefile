@@ -1,7 +1,6 @@
 SHELL := /bin/bash
 
 help:
-	# shellcheck disable=SC2046
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$|(^#--)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[32m %-43s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m #-- /[33m/'
 
 .PHONY: help
@@ -15,12 +14,12 @@ start: ## start the application
 	php bin/console cron:watch
 
 #-- db
-db-reset: ## reset the db
+db-reset: ## reset the db entirely
 	make db-migrate
 	make db-fixtures
 
 db-fixtures: ## load data fixtures
 	php bin/console doctrine:fi:load -n
 
-db-migrate: ## doctrine migrate
+db-migrate: ## apply the doctrine migrations
 	php bin/console doctrine:migrations:migrate -n
