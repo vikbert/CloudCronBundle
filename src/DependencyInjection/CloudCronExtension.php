@@ -25,9 +25,11 @@ final class CloudCronExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('cron_watcher.max_memory_limit', $config['cron_watcher']['max_memory_limit']);
-        $container->setParameter('cron_watcher.max_time_limit', $config['cron_watcher']['max_time_limit']);
-        $container->setParameter('cron_watcher.max_loop_limit', $config['cron_watcher']['max_loop_limit']);
+        if (isset($config['cron_watcher'])) {
+            $container->setParameter('cron_watcher.max_memory_limit', $config['cron_watcher']['max_memory_limit']);
+            $container->setParameter('cron_watcher.max_time_limit', $config['cron_watcher']['max_time_limit']);
+            $container->setParameter('cron_watcher.max_loop_limit', $config['cron_watcher']['max_loop_limit']);
+        }
     }
 
     public function getAlias(): string
