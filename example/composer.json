@@ -17,7 +17,7 @@
     "symfony/process": "5.3.*",
     "symfony/runtime": "5.3.*",
     "symfony/yaml": "5.3.*",
-    "vikbert/cloud-cron-bundle": "dev-master"
+    "vikbert/cloud-cron-bundle": "dev-main"
   },
   "repositories": [
     {
