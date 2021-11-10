@@ -58,7 +58,7 @@ jobs:
     - job: deploy
       displayName: 'Deploy package'
       dependsOn: check_version_number
-      condition: in(dependencies.check_version_number.result, 'Succeeded', "True")
+      condition: in(dependencies.check_version_number.result, 'Succeeded', 'True')
       steps:
           - task: CmdLine@2
             displayName: 'Cleanup and archiving files to zip-container'
