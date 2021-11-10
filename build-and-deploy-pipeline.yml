@@ -12,7 +12,7 @@ variables:
 
 jobs:
     -   job: publish_composer_package
-        displayName: 'Check version number'
+        displayName: 'Validating, archiving and publishing ...'
         steps:
             -   script: |
                     sudo update-alternatives --set php /usr/bin/php$(phpVersion)
