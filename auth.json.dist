@@ -1,0 +1,8 @@
+{
+  "http-basic": {
+    "schwarzit.jfrog.io": {
+      "username": "t-do-s-phpc",
+      "password": "#{{passwordArtifactoryTechUser}}#"
+    }
+  }
+}

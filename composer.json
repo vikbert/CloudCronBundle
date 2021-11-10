@@ -1,8 +1,9 @@
 {
     "name": "chapterphp/cloud-cron-bundle",
     "description": "A lightweight and super fast symfony bundle to schedule cron jobs in cloud environment",
-    "type": "library",
+    "version": "1.0.0",
     "keywords": ["stackit", "cron", "cron job", "process", "bundle"],
+    "type": "symfony bundle",
     "require": {
         "php": ">=7.4",
         "doctrine/annotations": "^1.13",
@@ -22,6 +23,19 @@
         {
             "name": "Xun Zhou",
             "email": "xun.zhou@mail.schwarz"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://schwarzit.jfrog.io/schwarzit/api/composer/github-php-remote"
+        },
+        {
+            "type": "composer",
+            "url": "https://schwarzit.jfrog.io/schwarzit/api/composer/de-sit-phpc-php-local"
+        },
+        {
+            "packagist": false
         }
     ]
 }
