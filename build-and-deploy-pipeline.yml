@@ -66,6 +66,9 @@ jobs:
                 script: |
                     echo "Archiving files to zip-container and exclude git-files"
                     cd $(Build.Repository.LocalPath)
+                    zip -r $(Build.ArtifactStagingDirectory)/$(composer.archive.name)-build-$(Build.SourceVersion)-$(Build.BuildNumber).zip . -x "*.git*"
+                    echo
+                    stat $(Build.ArtifactStagingDirectory)/$(composer.archive.name)-build-$(Build.SourceVersion)-$(Build.BuildNumber).zip
                 workingDirectory: '$(Build.Repository.LocalPath)'
             enabled: true
 
