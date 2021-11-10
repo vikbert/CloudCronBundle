@@ -32,10 +32,6 @@
     "repositories": [
         {
             "type": "composer",
-            "url": "https://schwarzit.jfrog.io/schwarzit/api/composer/github-php-remote"
-        },
-        {
-            "type": "composer",
             "url": "https://schwarzit.jfrog.io/schwarzit/api/composer/de-sit-phpc-php-local"
         },
         {
