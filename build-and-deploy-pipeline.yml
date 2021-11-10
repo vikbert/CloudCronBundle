@@ -11,87 +11,88 @@ variables:
     phpVersion: 7.4
 
 jobs:
-    - job: check_version_number
-      displayName: 'Check version number'
-      steps:
-          - script: |
-                sudo update-alternatives --set php /usr/bin/php$(phpVersion)
-                sudo update-alternatives --set phar /usr/bin/phar$(phpVersion)
-                sudo update-alternatives --set phpdbg /usr/bin/phpdbg$(phpVersion)
-                sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion)
-                sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
-                php -version
-            displayName: 'Use PHP version $(phpVersion)'
+    -   job: check_version_number
+        displayName: 'Check version number'
+        steps:
+            -   script: |
+                    sudo update-alternatives --set php /usr/bin/php$(phpVersion)
+                    sudo update-alternatives --set phar /usr/bin/phar$(phpVersion)
+                    sudo update-alternatives --set phpdbg /usr/bin/phpdbg$(phpVersion)
+                    sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion)
+                    sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
+                    php -version
+                displayName: 'Use PHP version $(phpVersion)'
 
-          - task: OneLuckiDev.json2variable.vsts-json-to-variable.oneLuckiDevJson2Variable@1
-            displayName: 'Import composer.json as variables to retrieve version-number'
-            inputs:
-                jsonFile: '$(Build.Repository.LocalPath)/composer.json'
-                shouldPrefixVariables: true
-                variablePrefix: 'composer'
-            enabled: true
+            -   task: OneLuckiDev.json2variable.vsts-json-to-variable.oneLuckiDevJson2Variable@1
+                displayName: 'Import composer.json as variables to retrieve version-number'
+                inputs:
+                    jsonFile: '$(Build.Repository.LocalPath)/composer.json'
+                    shouldPrefixVariables: true
+                    variablePrefix: 'composer'
+                enabled: true
 
-          - task: qetza.replacetokens.replacetokens-task.replacetokens@3
-            displayName: 'Generate auth.json and insert credentials'
-            inputs:
-                rootDirectory: '$(Build.Repository.LocalPath)'
-                targetFiles: '**/auth.json.dist => auth.json'
-                encoding: 'auto'
-                writeBOM: true
-                actionOnMissing: 'warn'
-                keepToken: true
-                tokenPrefix: '#{{'
-                tokenSuffix: '}}#'
-                useLegacyPattern: false
-                enableTelemetry: true
-            enabled: true
+            -   task: qetza.replacetokens.replacetokens-task.replacetokens@3
+                displayName: 'Generate auth.json and insert credentials'
+                inputs:
+                    rootDirectory: '$(Build.Repository.LocalPath)'
+                    targetFiles: '**/auth.json.dist => auth.json'
+                    encoding: 'auto'
+                    writeBOM: true
+                    actionOnMissing: 'warn'
+                    keepToken: true
+                    tokenPrefix: '#{{'
+                    tokenSuffix: '}}#'
+                    useLegacyPattern: false
+                    enableTelemetry: true
+                enabled: true
 
-          - task: CmdLine@2
-            displayName: 'Check version-number against artifactory'
-            inputs:
-                script: |
-                    echo "Check if version-number of composer.json already exists in artifactory: composer show $(composer.name) $(composer.version) --all"
-                    ! composer show $(composer.name) $(composer.version) --all
-                workingDirectory: '$(Build.Repository.LocalPath)'
-            enabled: true
+            -   task: CmdLine@2
+                displayName: 'Check version-number against artifactory'
+                inputs:
+                    script: |
+                        echo "Check if version-number of composer.json already exists in artifactory: composer show $(composer.name) $(composer.version) --all"
+                        ! composer show $(composer.name) $(composer.version) --all
+                    workingDirectory: '$(Build.Repository.LocalPath)'
+                enabled: true
 
-    - job: deploy
-      displayName: 'Deploy package'
-      dependsOn: check_version_number
-      condition: in(dependencies.check_version_number.result, 'Succeeded', 'True')
-      steps:
-          - task: CmdLine@2
-            displayName: 'Cleanup and archiving files to zip-container'
-            inputs:
-                script: |
-                    echo "Archiving files to zip-container and exclude git-files"
-                    cd $(Build.Repository.LocalPath)
-                    zip -r $(Build.ArtifactStagingDirectory)/$(composer.archive.name)-build-$(Build.SourceVersion)-$(Build.BuildNumber).zip . -x "*.git*"
-                    echo
-                    stat $(Build.ArtifactStagingDirectory)/$(composer.archive.name)-build-$(Build.SourceVersion)-$(Build.BuildNumber).zip
-                workingDirectory: '$(Build.Repository.LocalPath)'
-            enabled: true
+            -   task: CmdLine@2
+                    displayName: 'Cleanup and archiving files to zip-container'
+                    inputs:
+                        jsonFile: '$(Build.Repository.LocalPath)/composer.json'
+                        shouldPrefixVariables: true
+                        variablePrefix: 'composer'
+                        script: |
+                            echo "Archiving files to zip-container and exclude git-files"
+                            cd $(Build.Repository.LocalPath)
+                            zip -r $(Build.ArtifactStagingDirectory)/$(composer.archive.name)-build-$(Build.SourceVersion)-$(Build.BuildNumber).zip . -x "*.git*"
+                            echo
+                            stat $(Build.ArtifactStagingDirectory)/$(composer.archive.name)-build-$(Build.SourceVersion)-$(Build.BuildNumber).zip
+                        workingDirectory: '$(Build.Repository.LocalPath)'
+                    enabled: true
 
-          - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@2
-            displayName: 'Artifactory Generic Upload'
-            inputs:
-                artifactoryService: 'Schwarz IT Artifactory'
-                fileSpec: |
-                    {
-                      "files": [
+            -   task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@2
+                displayName: 'Artifactory Generic Upload'
+                inputs:
+                    artifactoryService: 'Schwarz IT Artifactory'
+                    jsonFile: '$(Build.Repository.LocalPath)/composer.json'
+                    shouldPrefixVariables: true
+                    variablePrefix: 'composer'
+                    fileSpec: |
                         {
-                          "pattern": "$(Build.ArtifactStagingDirectory)/$(composer.archive.name)-build-$(Build.SourceVersion)-$(Build.BuildNumber).zip",
-                          "target": "de-sit-phpc-php-local/php/bundles/$(composer.archive.name)/commits/$(Build.SourceVersion)/"
+                          "files": [
+                            {
+                              "pattern": "$(Build.ArtifactStagingDirectory)/$(composer.archive.name)-build-$(Build.SourceVersion)-$(Build.BuildNumber).zip",
+                              "target": "de-sit-phpc-php-local/php/bundles/$(composer.archive.name)/commits/$(Build.SourceVersion)/"
+                            }
+                          ]
                         }
-                      ]
-                    }
-                collectBuildInfo: true
-                includeEnvVars: true
-                enabled: true
+                    collectBuildInfo: true
+                    includeEnvVars: true
+                    enabled: true
 
-          - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-publish-build-info.ArtifactoryPublishBuildInfo@1
-            displayName: 'Artifactory Publish Build Info'
-            inputs:
-                artifactoryService: 'Schwarz IT Artifactory'
-                excludeEnvVars: '*password*;*secret*;*key*;*token*,*auth*,*credentials*'
-                enabled: true
+            -   task: JFrog.jfrog-artifactory-vsts-extension.artifactory-publish-build-info.ArtifactoryPublishBuildInfo@1
+                    displayName: 'Artifactory Publish Build Info'
+                    inputs:
+                        artifactoryService: 'Schwarz IT Artifactory'
+                        excludeEnvVars: '*password*;*secret*;*key*;*token*,*auth*,*credentials*'
+                    enabled: true
