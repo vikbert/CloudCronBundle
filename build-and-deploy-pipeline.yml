@@ -50,7 +50,7 @@ jobs:
             displayName: 'Check version-number against artifactory'
             inputs:
                 script: |
-                    echo "Check if version-number of composer.json already exists in artifactory"
+                    echo "Check if version-number of composer.json already exists in artifactory: composer show $(composer.name) $(composer.version) --all"
                     ! composer show $(composer.name) $(composer.version) --all
                 workingDirectory: '$(Build.Repository.LocalPath)'
             enabled: true
