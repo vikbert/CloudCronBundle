@@ -12,7 +12,7 @@ variables:
 
 jobs:
     - job: check_version_number
-      displayName: 'Check version-number against artifactory'
+      displayName: 'Check version number'
       steps:
           - script: |
                 sudo update-alternatives --set php /usr/bin/php$(phpVersion)
@@ -56,9 +56,9 @@ jobs:
             enabled: true
 
     - job: deploy
-      displayName: 'Deploy package to artifactory if version-number is new'
+      displayName: 'Deploy package'
       dependsOn: check_version_number
-      condition: failed()
+      condition: in(dependencies.check_version_number.result, 'Succeeded', "True")
       steps:
           - task: CmdLine@2
             displayName: 'Cleanup and archiving files to zip-container'
