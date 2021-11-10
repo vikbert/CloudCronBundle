@@ -1,5 +1,9 @@
 {
     "name": "chapterphp/cloud-cron-bundle",
+    "archive": {
+        "name": "cloud-cron-bundle",
+        "exclude": ["example", "docs"]
+    },
     "description": "A lightweight and super fast symfony bundle to schedule cron jobs in cloud environment",
     "version": "1.0.0",
     "keywords": ["stackit", "cron", "cron job", "process", "bundle"],
