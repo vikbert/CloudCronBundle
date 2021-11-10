@@ -7,7 +7,7 @@
     "description": "A lightweight and super fast symfony bundle to schedule cron jobs in cloud environment",
     "version": "1.0.0",
     "keywords": ["stackit", "cron", "cron job", "process", "bundle"],
-    "type": "symfony bundle",
+    "type": "symfony-bundle",
     "require": {
         "php": ">=7.4",
         "doctrine/annotations": "^1.13",
