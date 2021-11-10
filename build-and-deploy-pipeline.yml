@@ -44,7 +44,7 @@ jobs:
                 tokenSuffix: '}}#'
                 useLegacyPattern: false
                 enableTelemetry: true
-            enabled: false
+            enabled: true
 
           - task: CmdLine@2
             displayName: 'Check version-number against artifactory'
@@ -53,7 +53,7 @@ jobs:
                     echo "Check if version-number of composer.json already exists in artifactory"
                     ! composer show sit/ezp-block-extractor $(composer.version) --all
                 workingDirectory: '$(Build.Repository.LocalPath)'
-            enabled: false
+            enabled: true
 
     - job: deploy
       displayName: 'Deploy package to artifactory if version-number is new'
