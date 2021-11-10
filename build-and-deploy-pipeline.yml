@@ -56,19 +56,19 @@ jobs:
                 enabled: true
 
             -   task: CmdLine@2
-                    displayName: 'Cleanup and archiving files to zip-container'
-                    inputs:
-                        jsonFile: '$(Build.Repository.LocalPath)/composer.json'
-                        shouldPrefixVariables: true
-                        variablePrefix: 'composer'
-                        script: |
-                            echo "Archiving files to zip-container and exclude git-files"
-                            cd $(Build.Repository.LocalPath)
-                            zip -r $(Build.ArtifactStagingDirectory)/$(composer.archive.name)-build-$(Build.SourceVersion)-$(Build.BuildNumber).zip . -x "*.git*"
-                            echo
-                            stat $(Build.ArtifactStagingDirectory)/$(composer.archive.name)-build-$(Build.SourceVersion)-$(Build.BuildNumber).zip
-                        workingDirectory: '$(Build.Repository.LocalPath)'
-                    enabled: true
+                displayName: 'Cleanup and archiving files to zip-container'
+                inputs:
+                    jsonFile: '$(Build.Repository.LocalPath)/composer.json'
+                    shouldPrefixVariables: true
+                    variablePrefix: 'composer'
+                    script: |
+                        echo "Archiving files to zip-container and exclude git-files"
+                        cd $(Build.Repository.LocalPath)
+                        zip -r $(Build.ArtifactStagingDirectory)/$(composer.archive.name)-build-$(Build.SourceVersion)-$(Build.BuildNumber).zip . -x "*.git*"
+                        echo
+                        stat $(Build.ArtifactStagingDirectory)/$(composer.archive.name)-build-$(Build.SourceVersion)-$(Build.BuildNumber).zip
+                    workingDirectory: '$(Build.Repository.LocalPath)'
+                enabled: true
 
             -   task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@2
                 displayName: 'Artifactory Generic Upload'
@@ -88,11 +88,11 @@ jobs:
                         }
                     collectBuildInfo: true
                     includeEnvVars: true
-                    enabled: true
+                enabled: true
 
             -   task: JFrog.jfrog-artifactory-vsts-extension.artifactory-publish-build-info.ArtifactoryPublishBuildInfo@1
-                    displayName: 'Artifactory Publish Build Info'
-                    inputs:
-                        artifactoryService: 'Schwarz IT Artifactory'
-                        excludeEnvVars: '*password*;*secret*;*key*;*token*,*auth*,*credentials*'
-                    enabled: true
+                displayName: 'Artifactory Publish Build Info'
+                inputs:
+                    artifactoryService: 'Schwarz IT Artifactory'
+                    excludeEnvVars: '*password*;*secret*;*key*;*token*,*auth*,*credentials*'
+                enabled: true
