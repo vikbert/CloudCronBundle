@@ -1,0 +1,7 @@
+steps:
+    -   task: JFrog.jfrog-artifactory-vsts-extension.artifactory-publish-build-info.ArtifactoryPublishBuildInfo@1
+        displayName: 'Artifactory Publish Build Info'
+        inputs:
+            artifactoryService: 'Schwarz IT Artifactory'
+            excludeEnvVars: '*password*;*secret*;*key*;*token*,*auth*,*credentials*'
+        enabled: true

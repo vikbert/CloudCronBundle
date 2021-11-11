@@ -7,66 +7,35 @@ trigger:
 pool:
     vmImage: 'ubuntu-latest'
 
-variables:
-    phpVersion: 7.4
 
+# variables for package building
+# -------------------------------------------------
+variables:
+    -   phpVersion: 7.3
+    -   packageName: cloud-cron-bundle
+    -   archivingFilePath: $(Build.ArtifactStagingDirectory)/$(packageName)-build-$(Build.SourceVersion)-$(Build.BuildNumber).zip
+    -   targetPath: de-sit-phpc-php-local/php/bundles/$(packageName)/commits/$(Build.SourceVersion)/
+
+
+# Jobs and steps
+# -------------------------------------------------
 jobs:
     -   job: publish_composer_package
-        displayName: 'Validating, archiving and publishing ...'
+        displayName: 'Validate, archive and publish'
         steps:
-            -   script: |
-                    sudo update-alternatives --set php /usr/bin/php$(phpVersion)
-                    sudo update-alternatives --set phar /usr/bin/phar$(phpVersion)
-                    sudo update-alternatives --set phpdbg /usr/bin/phpdbg$(phpVersion)
-                    sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion)
-                    sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
-                    php -version
-                displayName: 'Use PHP version $(phpVersion)'
-
-            -   task: OneLuckiDev.json2variable.vsts-json-to-variable.oneLuckiDevJson2Variable@1
-                displayName: 'Import composer.json as variables to retrieve version-number'
-                inputs:
-                    jsonFile: '$(Build.Repository.LocalPath)/composer.json'
-                    shouldPrefixVariables: true
-                    variablePrefix: 'composer'
-                enabled: true
-
-            -   task: qetza.replacetokens.replacetokens-task.replacetokens@3
-                displayName: 'Generate auth.json and insert credentials'
-                inputs:
-                    rootDirectory: '$(Build.Repository.LocalPath)'
-                    targetFiles: '**/auth.json.dist => auth.json'
-                    encoding: 'auto'
-                    writeBOM: true
-                    actionOnMissing: 'warn'
-                    keepToken: true
-                    tokenPrefix: '#{{'
-                    tokenSuffix: '}}#'
-                    useLegacyPattern: false
-                    enableTelemetry: true
-                enabled: true
+            -   template: steps/set-php-path.yml
+            -   template: steps/validate-composer-package-version.yml
+            -   template: steps/generate-auth-json.yml
 
             -   task: CmdLine@2
-                displayName: 'Check version-number against artifactory'
+                displayName: 'Archiving files'
                 inputs:
-                    script: |
-                        echo "Check if version-number of composer.json already exists in artifactory: composer show $(composer.name) $(composer.version) --all"
-                        ! composer show $(composer.name) $(composer.version) --all
-                    workingDirectory: '$(Build.Repository.LocalPath)'
-                enabled: true
-
-            -   task: CmdLine@2
-                displayName: 'Cleanup and archiving files to zip-container'
-                inputs:
-                    jsonFile: '$(Build.Repository.LocalPath)/composer.json'
-                    shouldPrefixVariables: true
-                    variablePrefix: 'composer'
                     script: |
                         echo "Archiving files to zip-container and exclude git-files"
                         cd $(Build.Repository.LocalPath)
-                        zip -r $(Build.ArtifactStagingDirectory)/$(composer.archive.name)-build-$(Build.SourceVersion)-$(Build.BuildNumber).zip . -x "*.git*"
+                        zip -r $(archivingFilePath) . -x "*.git*"
                         echo
-                        stat $(Build.ArtifactStagingDirectory)/$(composer.archive.name)-build-$(Build.SourceVersion)-$(Build.BuildNumber).zip
+                        stat $(archivingFilePath)
                     workingDirectory: '$(Build.Repository.LocalPath)'
                 enabled: true
 
@@ -74,15 +43,12 @@ jobs:
                 displayName: 'Artifactory Generic Upload'
                 inputs:
                     artifactoryService: 'Schwarz IT Artifactory'
-                    jsonFile: '$(Build.Repository.LocalPath)/composer.json'
-                    shouldPrefixVariables: true
-                    variablePrefix: 'composer'
                     fileSpec: |
                         {
                           "files": [
                             {
-                              "pattern": "$(Build.ArtifactStagingDirectory)/$(composer.archive.name)-build-$(Build.SourceVersion)-$(Build.BuildNumber).zip",
-                              "target": "de-sit-phpc-php-local/php/bundles/$(composer.archive.name)/commits/$(Build.SourceVersion)/"
+                              "pattern": "$(archivingFilePath)",
+                              "target": "$(targetPath)"
                             }
                           ]
                         }
@@ -90,9 +56,4 @@ jobs:
                     includeEnvVars: true
                 enabled: true
 
-            -   task: JFrog.jfrog-artifactory-vsts-extension.artifactory-publish-build-info.ArtifactoryPublishBuildInfo@1
-                displayName: 'Artifactory Publish Build Info'
-                inputs:
-                    artifactoryService: 'Schwarz IT Artifactory'
-                    excludeEnvVars: '*password*;*secret*;*key*;*token*,*auth*,*credentials*'
-                enabled: true
+            -   template: steps/build-info.yml

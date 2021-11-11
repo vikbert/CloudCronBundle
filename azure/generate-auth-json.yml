@@ -1,0 +1,15 @@
+steps:
+        -   task: qetza.replacetokens.replacetokens-task.replacetokens@3
+            displayName: 'Generate auth.json and insert credentials'
+            inputs:
+                    rootDirectory: '$(Build.Repository.LocalPath)'
+                    targetFiles: '**/auth.json.dist => auth.json'
+                    encoding: 'auto'
+                    writeBOM: true
+                    actionOnMissing: 'warn'
+                    keepToken: true
+                    tokenPrefix: '#{{'
+                    tokenSuffix: '}}#'
+                    useLegacyPattern: false
+                    enableTelemetry: true
+            enabled: true

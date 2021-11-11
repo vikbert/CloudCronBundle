@@ -1,0 +1,9 @@
+steps:
+    -   script: |
+            sudo update-alternatives --set php /usr/bin/php$(php_verison)
+            sudo update-alternatives --set phar /usr/bin/phar$(php_version)
+            sudo update-alternatives --set phpdbg /usr/bin/phpdbg$(php_version)
+            sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(php_version)
+            sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(php_version)
+            php -version
+            displayName: 'Use PHP version $(php_version)'

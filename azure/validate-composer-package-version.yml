@@ -1,0 +1,13 @@
+steps:
+    -   task: OneLuckiDev.json2variable.vsts-json-to-variable.oneLuckiDevJson2Variable@1
+        displayName: 'Import composer.json as variables to retrieve version-number'
+        inputs:
+            jsonFile: '$(Build.Repository.LocalPath)/composer.json'
+            shouldPrefixVariables: true
+            variablePrefix: 'composer'
+            script: |
+                echo "Check if version-number of composer.json already exists in artifactory: composer show $(composer.name) $(composer.version) --all"
+                ! composer show $(composer.name) $(composer.version) --all
+            workingDirectory: '$(Build.Repository.LocalPath)'
+        enabled: true
+        continueOnError: false
